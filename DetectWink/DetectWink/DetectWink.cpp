@@ -41,7 +41,7 @@ void drawRectangle(Mat frame, const Rect rect, int r, int g, int b)
 	int width2 = rect.width / 2;
 	int height2 = rect.height / 2;
 	Point center(rect.x + width2, rect.y + height2);
-	rectangle(frame, center, Size(width2, height2), 0, 0, 360, Scalar(r, g, b), 2, 8, 0);
+	rectangle(frame, Point(rect.x, rect.y), Point(rect.x + rect.width, rect.y + rect.height), Scalar(r, g, b), 2, 8, 0);
 }
 
 
@@ -58,18 +58,21 @@ bool detectWink(Mat frame, Point location, Mat ROI, CascadeClassifier cascade)
 	{
 		CascadeClassifier switchcas;
 		switchcas.load(FACES_RIGHT_EYE);
-		switchcas.detectMultiScale(ROI, eyes, 1.1, 15, 0, Size(10, 10));
+		switchcas.detectMultiScale(ROI, eyes, 1.09, 10, 0, Size(10, 10));
 
 		neyes = (int)eyes.size();
 	}
-	/*
+
+	equalizeHist(ROI, ROI);
+
 	if (neyes == 0)
 	{
-	CascadeClassifier switchcas;
-	switchcas.load(FACES_LEFT_EYE);
-	switchcas.detectMultiScale(ROI, eyes, 1.1, 15, 0, Size(10, 10));
+		CascadeClassifier switchcas2;
+		switchcas2.load(FACES_LEFT_EYE);
+		switchcas2.detectMultiScale(ROI, eyes, 1.09, 10, 0, Size(10, 10));
+
+		neyes = (int)eyes.size();
 	}
-	*/
 
 	for (int i = 0; i < neyes; i++) {
 		Rect eyes_i = eyes[i];
@@ -116,19 +119,19 @@ int detect(Mat frame, CascadeClassifier cascade_face, CascadeClassifier cascade_
 	int nfaces = (int)faces.size();
 	if (nfaces == 0)
 	{
-		CascadeClassifier second;
-		second.load(FACES_PROFILE_FACE);
+		CascadeClassifier cas;
+		cas.load(FACES_PROFILE_FACE);
 		cascade_face.detectMultiScale(frame_gray, faces, 1.1, 1, 0 | CV_HAAR_SCALE_IMAGE, Size(20, 20));
 		nfaces = (int)faces.size();
 	}
 	for (int i = 0; i < nfaces; i++)
 	{
 		Rect face = faces[i];
-		drawEllipse(frame, face, 255, 0, 255);
+		drawRectangle(frame, face, 255, 0, 255);
 		Mat faceROI = frame_gray(face);
 		imshow("face", faceROI);
 		if (detectWink(frame, Point(face.x, face.y), faceROI, cascade_eyes)) {
-			drawEllipse(frame, face, 0, 255, 0);
+			drawRectangle(frame, face, 0, 255, 0);
 			detected++;
 		}
 	}
