@@ -44,7 +44,7 @@ bool detectSilence(Mat frame, Point location, Mat ROI, CascadeClassifier cascade
 {
 	// frame,location are used only for drawing the detected mouths
 	vector<Rect> mouths;
-	cascade.detectMultiScale(ROI, mouths, 1.2, 20, 0, Size(10, 10));
+	cascade.detectMultiScale(ROI, mouths, 1.1, 20, 0, Size(10, 10));
 
 	int nmouths = (int)mouths.size();
 	for (int i = 0; i < nmouths; i++) {
@@ -87,7 +87,7 @@ int detect(Mat frame,
 	int nfaces = (int)faces.size();
 	for (int i = 0; i < nfaces; i++) {
 		Rect face = faces[i];
-		drawEllipse(frame, face, 255, 0, 255);
+		drawRectangle(frame, face, 255, 0, 255);
 		int x1 = face.x;
 		int y1 = face.y + face.height / 2;
 		Rect lower_face = Rect(x1, y1, face.width, face.height / 2);

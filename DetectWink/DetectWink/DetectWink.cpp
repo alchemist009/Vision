@@ -49,7 +49,7 @@ bool detectWink(Mat frame, Point location, Mat ROI, CascadeClassifier cascade)
 {
 	// frame,ctr are only used for drawing the detected eyes
 	vector<Rect> eyes;
-	cascade.detectMultiScale(ROI, eyes, 1.1, 15, 0, Size(10, 10));
+	cascade.detectMultiScale(ROI, eyes, 1.06, 16, 0, Size(10, 10));
 
 	int neyes = (int)eyes.size();
 	equalizeHist(ROI, ROI);
