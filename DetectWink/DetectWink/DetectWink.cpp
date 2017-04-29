@@ -21,8 +21,12 @@ string cascades = OPENCV_ROOT + "sources/data/haarcascades/";
 string FACES_CASCADE_NAME = cascades + "haarcascade_frontalface_alt.xml";
 string EYES_CASCADE_NAME = cascades + "haarcascade_eye.xml";
 string FACES_PROFILE_FACE = cascades + "haarcascade_profileface.xml";
-string FACES_LEFT_EYE = cascades + "haarcascade_mcs_lefteye.xml";
+//string FACES_LEFT_EYE = cascades + "haarcascade_lefteye_2splits.xml";
 string FACES_RIGHT_EYE = cascades + "haarcascade_mcs_righteye.xml";
+//string FACES_RIGHT_EYE = cascades + "haarcascade_lefteye_2splits.xml";
+string FACES_LEFT_EYE = cascades + "haarcascade_mcs_lefteye.xml";
+
+
 
 
 
@@ -52,6 +56,7 @@ bool detectWink(Mat frame, Point location, Mat ROI, CascadeClassifier cascade)
 	cascade.detectMultiScale(ROI, eyes, 1.06, 16, 0, Size(10, 10));
 
 	int neyes = (int)eyes.size();
+
 	equalizeHist(ROI, ROI);
 
 	if (neyes == 0)
@@ -64,7 +69,7 @@ bool detectWink(Mat frame, Point location, Mat ROI, CascadeClassifier cascade)
 	}
 
 	equalizeHist(ROI, ROI);
-
+	
 	if (neyes == 0)
 	{
 		CascadeClassifier switchcas2;
@@ -73,6 +78,7 @@ bool detectWink(Mat frame, Point location, Mat ROI, CascadeClassifier cascade)
 
 		neyes = (int)eyes.size();
 	}
+	
 
 	for (int i = 0; i < neyes; i++) {
 		Rect eyes_i = eyes[i];
