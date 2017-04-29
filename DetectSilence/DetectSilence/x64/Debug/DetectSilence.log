@@ -1,3 +1,4 @@
 ﻿  Source.cpp
+c:\users\wra1th\documents\visual studio 2015\projects\detectsilence\detectsilence\source.cpp(107): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
   DetectSilence.vcxproj -> C:\Users\wra1th\Documents\Visual Studio 2015\Projects\DetectSilence\x64\Debug\DetectSilence.exe
   DetectSilence.vcxproj -> C:\Users\wra1th\Documents\Visual Studio 2015\Projects\DetectSilence\x64\Debug\DetectSilence.pdb (Full PDB)

@@ -21,6 +21,8 @@ string FACES_CASCADE_NAME = cascades + "haarcascade_frontalface_alt.xml";
 
 /*  The mouth cascade is assumed to be in the local folder */
 string MOUTH_CASCADE_NAME = cascades + "Mouth.xml";
+//string MOUTH_CASCADE_NAME = cascades + "haarcascade_mcs_mouth.xml";
+
 
 
 void drawEllipse(Mat frame, const Rect rect, int r, int g, int b) {
@@ -44,9 +46,19 @@ bool detectSilence(Mat frame, Point location, Mat ROI, CascadeClassifier cascade
 {
 	// frame,location are used only for drawing the detected mouths
 	vector<Rect> mouths;
-	cascade.detectMultiScale(ROI, mouths, 1.1, 20, 0, Size(10, 10));
+	cascade.detectMultiScale(ROI, mouths, 1.1, 25, 0, Size(10, 10));
 
 	int nmouths = (int)mouths.size();
+	/*
+	if (nmouths == 0)
+	{
+		CascadeClassifier switchcas;
+		switchcas.load(MOUTH_CASCADE_NAME2);
+		switchcas.detectMultiScale(ROI, mouths, 1.1, 20, 0, Size(10, 10));
+
+		nmouths = (int)mouths.size();
+	}
+	*/
 	for (int i = 0; i < nmouths; i++) {
 		Rect mouth_i = mouths[i];
 		drawRectangle(frame, mouth_i + location, 255, 255, 0);
@@ -64,6 +76,7 @@ int detect(Mat frame,
 
 	//equalizeHist(frame_gray, frame_gray); // input, outuput
 	//medianBlur(frame_gray, frame_gray, 5); // input, output, neighborhood_size
+	//GaussianBlur(frame_gray, frame_gray, Size(20,20)); // input, output, neighborhood_size
 	//  blur(frame_gray, frame_gray, Size(5,5), Point(-1,-1));
 	/*  input,output,neighborood_size,center_location (neg means - true center) */
 
@@ -90,7 +103,8 @@ int detect(Mat frame,
 		drawRectangle(frame, face, 255, 0, 255);
 		int x1 = face.x;
 		int y1 = face.y + face.height / 2;
-		Rect lower_face = Rect(x1, y1, face.width, face.height / 2);
+		//Rect lower_face = Rect(x1, y1, face.width, face.height / 2);
+		Rect lower_face = Rect((int)face.x, (int)(face.y + face.height*0.65), face.width, face.height*0.5);
 		drawRectangle(frame, lower_face, 100, 0, 255);
 		Mat lower_faceROI = frame_gray(lower_face);
 		if (detectSilence(frame, Point(x1, y1), lower_faceROI, cascade_mouth)) {
