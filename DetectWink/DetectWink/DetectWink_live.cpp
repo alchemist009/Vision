@@ -53,7 +53,7 @@ bool detectWink(Mat frame, Point location, Mat ROI, CascadeClassifier cascade)
 {
 	// frame,ctr are only used for drawing the detected eyes
 	vector<Rect> eyes;
-	cascade.detectMultiScale(ROI, eyes, 1.1, 20, 0, Size(10, 10));
+	cascade.detectMultiScale(ROI, eyes, 1.095, 15, 0, Size(10, 10));
 
 	int neyes = (int)eyes.size();
 	/*
@@ -61,22 +61,22 @@ bool detectWink(Mat frame, Point location, Mat ROI, CascadeClassifier cascade)
 
 	if (neyes == 0)
 	{
-		CascadeClassifier switchcas;
-		switchcas.load(FACES_RIGHT_EYE);
-		switchcas.detectMultiScale(ROI, eyes, 1.09, 10, 0, Size(10, 10));
+	CascadeClassifier switchcas;
+	switchcas.load(FACES_RIGHT_EYE);
+	switchcas.detectMultiScale(ROI, eyes, 1.09, 10, 0, Size(10, 10));
 
-		neyes = (int)eyes.size();
+	neyes = (int)eyes.size();
 	}
 
 	equalizeHist(ROI, ROI);
-	
+
 	if (neyes == 0)
 	{
-		CascadeClassifier switchcas2;
-		switchcas2.load(FACES_LEFT_EYE);
-		switchcas2.detectMultiScale(ROI, eyes, 1.09, 10, 0, Size(10, 10));
+	CascadeClassifier switchcas2;
+	switchcas2.load(FACES_LEFT_EYE);
+	switchcas2.detectMultiScale(ROI, eyes, 1.09, 10, 0, Size(10, 10));
 
-		neyes = (int)eyes.size();
+	neyes = (int)eyes.size();
 	}
 	*/
 

@@ -78,7 +78,6 @@ bool detectWink(Mat frame, Point location, Mat ROI, CascadeClassifier cascade)
 
 		neyes = (int)eyes.size();
 	}
-	
 
 	for (int i = 0; i < neyes; i++) {
 		Rect eyes_i = eyes[i];
